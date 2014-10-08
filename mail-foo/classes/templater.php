@@ -8,15 +8,28 @@ class templater {
 
 	private $plugin;
 
+	/**
+	 * Class constructor
+	 */
 	public function __construct() {
 		$this->plugin = plugin();
 	}
 
+	/**
+	 * Adds `$this->filter` to the `wp_mail` filter hook
+	 */
 	public function add_actions() {
 		// We hook in at the last available hook so we can catch if other plugins already switch to the HTML content type
 		add_filter('wp_mail', array($this, 'filter'), 1, PHP_INT_MAX);
 	}
 
+	/**
+	 * `wp_mail` Filter. Templates text/plain emails and adds the tex/html Content Type
+	 *
+	 * @param $args
+	 *
+	 * @return array
+	 */
 	public function filter($args) {
 		$new_args = array(
 			'to'          => $args['to'],
@@ -29,13 +42,18 @@ class templater {
 
 		if(is_array($args['headers'])) $args['headers'] = implode("\r\n", $args['headers']);
 
+		// Check headers for a preset Content Type
 		if(is_string($args['headers']) && !empty($args['headers'])) {
 			$headers = $this->parse_headers($args['headers']);
 
 			foreach($headers as $i => $h)
-				if(stripos($i, 'Content-Type') && stripos($h, 'text/html'))
+				if(stripos($i, 'Content-Type') && !stripos($h, 'text/plain'))
 					$do_html = FALSE;
 
+			// Check for filters on `wp_mail_content_type` as well
+			if('text/plain' !== apply_filters('wp_mail_content_type', 'text/plain')) $do_html = FALSE;
+
+			// If set to text/plain, we're going to template it.
 			if($do_html) {
 				foreach($headers as $i => $h) {
 					if(is_array($h))
@@ -45,23 +63,23 @@ class templater {
 						$headers_parsed[] = $i.': '.trim($h);
 				}
 
-				$headers_parsed[] = 'Content-Type: text/html; charset=UTF-8';
+				$headers_parsed[] = 'Content-Type: text/html; charset='.get_bloginfo('charset'); // Set text/html header
 
 				$new_args['headers'] = $headers_parsed;
 			}
-			else $new_args['headers'] = $args['headers'];
+			else $new_args['headers'] = $args['headers']; // Otherwise, we use the old headers
 		}
 
+		// Wrap template if text/plain
 		if($do_html) {
 			$opts     = $this->plugin->opts();
 			$template = file_get_contents($this->plugin->tmlt_dir.'/'.$opts['template']);
 
+			// TODO Shortcodes, Replacement Codes, etc.
+
 			$new_args['message'] = $template;
 		}
-		else $new_args['message'] = $args['message'];
-
-		var_dump($new_args);
-		exit();
+		else $new_args['message'] = $args['message']; // Else do nothing
 
 		return $new_args;
 	}
