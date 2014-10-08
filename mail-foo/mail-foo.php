@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Mail-Foo
+ * Plugin Name: Mail Foo
  * Plugin URI: http://mail-foo.com/
  * Author: Bruce Caldwell
  * Author URI: http://brucecaldwell.github.io/

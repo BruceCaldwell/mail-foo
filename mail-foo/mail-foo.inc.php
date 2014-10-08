@@ -41,17 +41,24 @@ class plugin {
 	 * Initialize template and SMTP functionality
 	 */
 	public function init() {
-		// Get Template
-		// Styles
-
-		// wp_mail Content Wrapper
-		// wp_mail Content-Type HTTP Header
+		$templater = new templater();
+		$templater->add_actions($this->opts()['template'], $this->opts()['parse_shortcodes'], $this->opts()['parse_markdown']);
 	}
 
 	/**
 	 * Initialize WordPress Dashboard pages
 	 */
 	public function init_admin() {
+	}
+
+	/**
+	 * Class autoloader
+	 *
+	 * @param $class
+	 */
+	public function autoload($class) {
+		if(strpos($class, __NAMESPACE__.'\\') !== FALSE && ($filename = str_replace(array(__NAMESPACE__.'\\', '_'), array('', '-'), $class)))
+			require_once($this->dir.'/class/'.$filename.'.php');
 	}
 
 	/**
