@@ -1,4 +1,4 @@
-<Files ~ "(\.php$|^\.ht|\.html$)">
+<Files ~ "(\.php$|^\.ht|\.html$|\.txt$)">
 	Order allow,deny
 	Deny from all
 </Files>
