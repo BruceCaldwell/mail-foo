@@ -14,15 +14,16 @@ class plugin {
 	/**
 	 * @var string
 	 */
-	public $file, $dir;
+	public $file, $dir, $tmlt_dir;
 
 	/**
 	 * Class constructor
 	 */
 	public function __construct() {
-		$this->file = str_replace('.inc.php', '.php', __FILE__);
-		$this->dir  = dirname(__FILE__);
-		$this->url  = plugins_url('', $this->file);
+		$this->file     = str_replace('.inc.php', '.php', __FILE__);
+		$this->dir      = dirname(__FILE__);
+		$this->tmlt_dir = $this->dir.'/templates';
+		$this->url      = plugins_url('', $this->file);
 
 		spl_autoload_register(array($this, 'autoload'));
 
@@ -44,9 +45,9 @@ class plugin {
 	 */
 	public function init() {
 		$templater = new templater();
-		$templater->add_actions($this->opts()['template'], $this->opts()['parse_shortcodes'], $this->opts()['parse_markdown']);
+		$templater->add_actions();
 
-		wp_mail('test@example.com', 'test', 'test', 'From: <Bruce Caldwell>bruce@websharks-inc.com' . "\r\n" . 'Reply-To: <Bruce>bruce@myinbox.ws' . "\r\n");
+		wp_mail('test@example.com', 'test', 'test', 'From: <Bruce Caldwell>bruce@websharks-inc.com'."\r\n".'Reply-To: <Bruce>bruce@myinbox.ws'."\r\n");
 	}
 
 	/**
