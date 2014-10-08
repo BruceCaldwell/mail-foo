@@ -94,8 +94,10 @@ class plugin {
 	}
 }
 
+/** @var plugin Class Instance */
 $GLOBALS[__NAMESPACE__] = new plugin;
 
+/** @return plugin */
 function plugin() {
 	return $GLOBALS[__NAMESPACE__];
 }
