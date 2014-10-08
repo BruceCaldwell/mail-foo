@@ -4,18 +4,42 @@ namespace mail_foo;
 if(!defined('WPINC'))
 	exit('Do NOT access this file directly: '.basename(__FILE__));
 
+/**
+ * Class plugin
+ *
+ * @package mail_foo
+ */
 class plugin {
 
+	/**
+	 * @var string
+	 */
 	public $file, $dir;
 
+	/**
+	 * Class constructor
+	 */
 	public function __construct() {
 		$this->file = str_replace('.inc.php', '.php', __FILE__);
 		$this->dir  = dirname(__FILE__);
 		$this->url  = plugins_url('', $this->file);
 
-		add_action('plugins_loaded', array($this, 'init'));
+		add_action('plugins_loaded', array($this, 'build'));
 	}
 
+	/**
+	 * Build plugin basics
+	 */
+	public function build() {
+		load_plugin_textdomain('mail-foo');
+
+		if($this->opts()['enabled']) $this->init();
+		if(is_admin()) $this->init_admin();
+	}
+
+	/**
+	 * Initialize template and SMTP functionality
+	 */
 	public function init() {
 		// Get Template
 		// Styles
@@ -24,8 +48,21 @@ class plugin {
 		// wp_mail Content-Type HTTP Header
 	}
 
+	/**
+	 * Initialize WordPress Dashboard pages
+	 */
+	public function init_admin() {
+	}
+
+	/**
+	 * Plugin options
+	 *
+	 * @return array
+	 */
 	public function opts() {
 		$defaults = array(
+			'enabled'          => FALSE,
+
 			'template'         => 'default.html',
 
 			'parse_shortcodes' => FALSE,
