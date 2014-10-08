@@ -24,6 +24,8 @@ class plugin {
 		$this->dir  = dirname(__FILE__);
 		$this->url  = plugins_url('', $this->file);
 
+		spl_autoload_register(array($this, 'autoload'));
+
 		add_action('plugins_loaded', array($this, 'build'));
 	}
 
@@ -43,6 +45,8 @@ class plugin {
 	public function init() {
 		$templater = new templater();
 		$templater->add_actions($this->opts()['template'], $this->opts()['parse_shortcodes'], $this->opts()['parse_markdown']);
+
+		wp_mail('test@example.com', 'test', 'test', 'From: <Bruce Caldwell>bruce@websharks-inc.com' . "\r\n" . 'Reply-To: <Bruce>bruce@myinbox.ws' . "\r\n");
 	}
 
 	/**
@@ -58,7 +62,7 @@ class plugin {
 	 */
 	public function autoload($class) {
 		if(strpos($class, __NAMESPACE__.'\\') !== FALSE && ($filename = str_replace(array(__NAMESPACE__.'\\', '_'), array('', '-'), $class)))
-			require_once($this->dir.'/class/'.$filename.'.php');
+			require_once($this->dir.'/classes/'.$filename.'.php');
 	}
 
 	/**
@@ -68,7 +72,7 @@ class plugin {
 	 */
 	public function opts() {
 		$defaults = array(
-			'enabled'          => FALSE,
+			'enabled'          => TRUE,
 
 			'template'         => 'default.html',
 
@@ -76,9 +80,10 @@ class plugin {
 			'parse_markdown'   => FALSE,
 
 			'smtp'             => FALSE,
+			'smtp_port'        => 25,
 			'smtp_host'        => '',
 			'smtp_user'        => '',
-			'smtp_password'    => ''
+			'smtp_pass'        => ''
 		);
 
 		$opts = get_site_option(__NAMESPACE__.'_options', FALSE);

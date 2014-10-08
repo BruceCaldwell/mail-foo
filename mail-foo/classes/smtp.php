@@ -10,5 +10,21 @@ class smtp {
 
 	public function __construct() {
 		$this->plugin = plugin();
+
+		$opts = $this->plugin->opts();
+
+		if($opts['smtp']) $this->force_smtp();
+	}
+
+	private function force_smtp() {
+		add_action('phpmailer_init', function ($mailer) {
+			$opts = $this->plugin->opts();
+
+			$mailer->IsSMTP();
+			$mailer->Host     = $opts['smtp_host'];
+			$mailer->Port     = $opts['smtp_port'];
+			$mailer->Username = $opts['smtp_user'];
+			$mailer->Password = $opts['smtp_pass'];
+		});
 	}
 }
