@@ -39,6 +39,7 @@ class templater {
 
 		$do_html        = TRUE;
 		$headers_parsed = array();
+		$headers        = array();
 
 		if(is_array($args['headers'])) $args['headers'] = implode("\r\n", $args['headers']);
 
@@ -47,40 +48,47 @@ class templater {
 			$headers = $this->parse_headers($args['headers']);
 
 			foreach($headers as $i => $h)
-				if(stripos($i, 'Content-Type') === 0 && stripos($h, 'text/plain') !== FALSE)
+				if(stripos($i, 'Content-Type') === 0 && stripos($h, 'text/html') !== FALSE)
 					$do_html = FALSE;
 
 			// Check for filters on `wp_mail_content_type` as well
 			if('text/plain' !== apply_filters('wp_mail_content_type', 'text/plain')) $do_html = FALSE;
-
-			// If set to text/plain, we're going to template it.
-			if($do_html) {
-				foreach($headers as $i => $h) {
-					if(is_array($h))
-						foreach($h as $he)
-							$headers_parsed[] = $i.': '.trim($he);
-					else
-						$headers_parsed[] = $i.': '.trim($h);
-				}
-
-				$headers_parsed[] = 'Content-Type: text/html; charset='.get_bloginfo('charset'); // Set text/html header
-
-				$new_args['headers'] = $headers_parsed;
-			}
-			else $new_args['headers'] = $args['headers']; // Otherwise, we use the old headers
 		}
+
+		// If set to text/plain, we're going to template it.
+		if($do_html) {
+			foreach($headers as $i => $h) {
+				if(is_array($h))
+					foreach($h as $he)
+						$headers_parsed[] = $i.': '.trim($he);
+				else
+					$headers_parsed[] = $i.': '.trim($h);
+			}
+
+			$headers_parsed[] = 'Content-Type: text/html; charset="'.get_bloginfo('charset').'"'; // Set text/html header
+
+			$new_args['headers'] = $headers_parsed;
+		}
+		else $new_args['headers'] = $args['headers']; // Otherwise, we use the old headers
 
 		// Wrap template if text/plain
 		if($do_html) {
 			$opts     = $this->plugin->opts();
 			$template = file_get_contents($this->plugin->tmlt_dir.'/'.$opts['template']);
 
-			// TODO Shortcodes, Replacement Codes, etc.
-			$message = str_replace('%%content%%', $args['message'], $template);
+			// TODO PHP execution
+			if(!$opts['parse_markdown']) $args['message'] = wpautop($args['message']);
+
+			$message = str_replace('%%content%%', wpautop(), $template);
+
+			if($opts['parse_shortcodes']) $message = do_shortcode($message);
+			if($opts['parse_markdown']) $message = $this->do_markdown($message);
 
 			$new_args['message'] = $message;
 		}
 		else $new_args['message'] = $args['message']; // Else do nothing
+
+		file_put_contents($this->plugin->dir.'/debug.log', print_r($new_args, TRUE), FILE_APPEND);
 
 		return $new_args;
 	}
@@ -118,5 +126,12 @@ class templater {
 		};
 
 		return $func($headers);
+	}
+
+	private function do_markdown($str) {
+		if(!class_exists('\\Michelf\\Markdown')) require($this->plugin->dir.'/md/Markdown.inc.php');
+
+		$md = apply_filters(__NAMESPACE__.'_markdown_function', array('\\Michelf\\Markdown', 'defaultTransform'));
+		return call_user_func($md, $str);
 	}
 }
