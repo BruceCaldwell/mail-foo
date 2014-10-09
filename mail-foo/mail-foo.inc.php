@@ -47,7 +47,7 @@ class plugin {
 		$templater = new templater();
 		$templater->add_actions();
 
-		wp_mail('bruce@myinbox.ws', 'test', 'test', 'From: <Bruce Caldwell>bruce@websharks-inc.com'."\r\n".'Reply-To: <Bruce>bruce@myinbox.ws'."\r\n");
+		//wp_mail('bruce@myinbox.ws', 'test', 'test', 'From: <Bruce Caldwell>bruce@websharks-inc.com'."\r\n".'Reply-To: <Bruce>bruce@myinbox.ws'."\r\n");
 	}
 
 	/**
@@ -97,7 +97,7 @@ class plugin {
 /** @var plugin Class Instance */
 $GLOBALS[__NAMESPACE__] = new plugin;
 
-/** @return plugin */
+/** @return plugin Class Instance */
 function plugin() {
 	return $GLOBALS[__NAMESPACE__];
 }

@@ -47,7 +47,7 @@ class templater {
 			$headers = $this->parse_headers($args['headers']);
 
 			foreach($headers as $i => $h)
-				if(stripos($i, 'Content-Type') && !stripos($h, 'text/plain'))
+				if(stripos($i, 'Content-Type') === 0 && stripos($h, 'text/plain') !== FALSE)
 					$do_html = FALSE;
 
 			// Check for filters on `wp_mail_content_type` as well
@@ -76,8 +76,9 @@ class templater {
 			$template = file_get_contents($this->plugin->tmlt_dir.'/'.$opts['template']);
 
 			// TODO Shortcodes, Replacement Codes, etc.
+			$message = str_replace('%%content%%', $args['message'], $template);
 
-			$new_args['message'] = $template;
+			$new_args['message'] = $message;
 		}
 		else $new_args['message'] = $args['message']; // Else do nothing
 
