@@ -79,6 +79,14 @@ class templater {
 			if(!$opts['parse_markdown']) $args['message'] = wpautop($args['message']);
 			$message = str_replace('%%content%%', wpautop($args['message']), $template);
 
+			$vars = array(
+				'site_url'         => site_url(),
+				'site_name'        => get_bloginfo('name'),
+				'site_description' => get_bloginfo('description'),
+				'admin_email'      => get_bloginfo('admin_email'),
+
+			);
+
 			if($opts['parse_shortcodes']) $message = do_shortcode($message);
 			if($opts['parse_markdown']) $message = $this->do_markdown($message);
 			if($opts['exec_php']) $message = $this->exec_php($message);
@@ -132,8 +140,16 @@ class templater {
 		return call_user_func($md, $str);
 	}
 
-	// TODO
-	private function exec_php($str) {
-		return $str;
+	private function exec_php($code, $vars = array()) {
+		if(!function_exists('eval')) return $code;
+
+		if(is_array($vars) && !empty($vars))
+			extract($vars, EXTR_PREFIX_SAME, '_extract_');
+
+		ob_start(); // Output buffer.
+		$ev = eval ("?>".trim($code));
+
+		if($ev !== FALSE) return ob_get_clean();
+		return $code;
 	}
 }
