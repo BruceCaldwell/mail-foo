@@ -48,14 +48,14 @@ class templater {
 			$headers = $this->parse_headers($args['headers']);
 
 			foreach($headers as $i => $h)
-				if(stripos($i, 'Content-Type') === 0 && stripos($h, 'text/html') !== FALSE)
+				if(stripos($i, 'Content-Type') === 0 && stripos(trim($h), 'text/plain') !== 0)
 					$do_html = FALSE;
 
 			// Check for filters on `wp_mail_content_type` as well
 			if('text/plain' !== apply_filters('wp_mail_content_type', 'text/plain')) $do_html = FALSE;
 		}
 
-		// If set to text/plain, we're going to template it.
+		// If set to text/plain, we need to set the Content-Type to text/html
 		if($do_html) {
 			foreach($headers as $i => $h) {
 				if(is_array($h))
@@ -65,7 +65,7 @@ class templater {
 					$headers_parsed[] = $i.': '.trim($h);
 			}
 
-			$headers_parsed[] = 'Content-Type: text/html; charset="'.get_bloginfo('charset').'"'; // Set text/html header
+			$headers_parsed[] = 'Content-Type: text/html; charset="'.apply_filters('wp_mail_charset', get_bloginfo('charset')).'"'; // Set text/html header
 
 			$new_args['headers'] = $headers_parsed;
 		}
@@ -76,19 +76,16 @@ class templater {
 			$opts     = $this->plugin->opts();
 			$template = file_get_contents($this->plugin->tmlt_dir.'/'.$opts['template']);
 
-			// TODO PHP execution
 			if(!$opts['parse_markdown']) $args['message'] = wpautop($args['message']);
-
-			$message = str_replace('%%content%%', wpautop(), $template);
+			$message = str_replace('%%content%%', wpautop($args['message']), $template);
 
 			if($opts['parse_shortcodes']) $message = do_shortcode($message);
 			if($opts['parse_markdown']) $message = $this->do_markdown($message);
+			if($opts['exec_php']) $message = $this->exec_php($message);
 
 			$new_args['message'] = $message;
 		}
 		else $new_args['message'] = $args['message']; // Else do nothing
-
-		file_put_contents($this->plugin->dir.'/debug.log', print_r($new_args, TRUE), FILE_APPEND);
 
 		return $new_args;
 	}
@@ -133,5 +130,10 @@ class templater {
 
 		$md = apply_filters(__NAMESPACE__.'_markdown_function', array('\\Michelf\\Markdown', 'defaultTransform'));
 		return call_user_func($md, $str);
+	}
+
+	// TODO
+	private function exec_php($str) {
+		return $str;
 	}
 }

@@ -46,8 +46,6 @@ class plugin {
 	public function init() {
 		$templater = new templater();
 		$templater->add_actions();
-
-		if(isset($_REQUEST['do_email'])) wp_mail('bruce@myinbox.ws', 'test', 'test', 'From: Bruce Caldwell <bruce@websharks-inc.com>'."\r\n".'Reply-To: Bruce <bruce@myinbox.ws>'."\r\n");
 	}
 
 	/**
@@ -79,6 +77,7 @@ class plugin {
 
 			'parse_shortcodes' => FALSE,
 			'parse_markdown'   => FALSE,
+			'exec_php'         => FALSE,
 
 			'smtp'             => FALSE,
 			'smtp_port'        => 25,
