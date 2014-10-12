@@ -55,6 +55,9 @@ class templater {
 			if('text/plain' !== apply_filters('wp_mail_content_type', 'text/plain')) $do_html = FALSE;
 		}
 
+		// TODO research multipart emails
+		// http://krijnhoetmer.nl/stuff/php/html-plain-text-mail/
+
 		// If set to text/plain, we need to set the Content-Type to text/html
 		if($do_html) {
 			foreach($headers as $i => $h) {
@@ -91,7 +94,7 @@ class templater {
 			if($opts['parse_markdown']) $message = $this->do_markdown($message);
 			if($opts['exec_php']) $message = $this->exec_php($message);
 
-			$new_args['message'] = $message;
+			$new_args['message'] = trim($message);
 		}
 		else $new_args['message'] = $args['message']; // Else do nothing
 

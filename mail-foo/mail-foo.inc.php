@@ -52,6 +52,8 @@ class plugin {
 	 * Initialize WordPress Dashboard pages
 	 */
 	public function init_admin() {
+		$admin = new admin;
+		add_action('admin_menu', array($admin, 'add_pages'));
 	}
 
 	/**
