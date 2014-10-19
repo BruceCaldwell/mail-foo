@@ -46,6 +46,7 @@ class plugin {
 	public function init() {
 		$templater = new templater();
 		$templater->add_actions();
+		new smtp;
 	}
 
 	/**
@@ -73,7 +74,7 @@ class plugin {
 	 */
 	public function opts() {
 		$defaults = array(
-			'enabled'          => TRUE,
+			'enabled'          => FALSE,
 
 			'template'         => 'default.html',
 
@@ -88,10 +89,12 @@ class plugin {
 			'smtp_pass'        => ''
 		);
 
+		$defaults = apply_filters(__NAMESPACE__.'_options_defaults', $defaults);
+
 		$opts = get_site_option(__NAMESPACE__.'_options', FALSE);
 
-		if(!$opts) return $defaults;
-		return (array)maybe_unserialize($opts);
+		if(!$opts) return apply_filters(__NAMESPACE__.'_options', $defaults);
+		return apply_filters(__NAMESPACE__.'_options', array_merge($defaults, (array)maybe_unserialize($opts)));
 	}
 }
 

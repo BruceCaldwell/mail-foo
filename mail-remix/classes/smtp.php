@@ -21,6 +21,7 @@ class smtp {
 			$opts = $this->plugin->opts();
 
 			$mailer->IsSMTP();
+			$mailer->SMTPAuth = TRUE;
 			$mailer->Host     = $opts['smtp_host'];
 			$mailer->Port     = $opts['smtp_port'];
 			$mailer->Username = $opts['smtp_user'];
