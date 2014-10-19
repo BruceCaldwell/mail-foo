@@ -1,5 +1,5 @@
 <?php
-namespace mail_foo;
+namespace mail_remix;
 
 if(!defined('WPINC'))
 	exit('Do NOT access this file directly: '.basename(__FILE__));

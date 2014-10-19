@@ -1,5 +1,5 @@
 <?php
-namespace mail_foo;
+namespace mail_remix;
 
 if(!defined('WPINC'))
 	exit('Do NOT access this file directly: '.basename(__FILE__));
@@ -7,7 +7,7 @@ if(!defined('WPINC'))
 /**
  * Class plugin
  *
- * @package mail_foo
+ * @package mail_remix
  */
 class plugin {
 
@@ -34,7 +34,7 @@ class plugin {
 	 * Build plugin basics
 	 */
 	public function build() {
-		load_plugin_textdomain('mail-foo');
+		load_plugin_textdomain('mail-remix');
 
 		if($this->opts()['enabled']) $this->init();
 		if(is_admin()) $this->init_admin();
