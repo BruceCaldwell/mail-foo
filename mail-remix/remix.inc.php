@@ -63,7 +63,10 @@ class plugin {
 	 * @param $class
 	 */
 	public function autoload($class) {
-		if(strpos($class, __NAMESPACE__.'\\') !== FALSE && ($filename = str_replace(array(__NAMESPACE__.'\\', '_'), array('', '-'), $class)))
+		if(strpos($class, __NAMESPACE__.'\\') !== FALSE
+		   && ($filename = str_replace(array(__NAMESPACE__.'\\', '_'), array('', '-'), $class))
+		   && file_exists($this->dir.'/classes/'.$filename.'.php')
+		)
 			require_once($this->dir.'/classes/'.$filename.'.php');
 	}
 
@@ -86,7 +89,9 @@ class plugin {
 			'smtp_port'        => 25,
 			'smtp_host'        => '',
 			'smtp_user'        => '',
-			'smtp_pass'        => ''
+			'smtp_pass'        => '',
+
+			'logging'          => TRUE
 		);
 
 		$defaults = apply_filters(__NAMESPACE__.'_options_defaults', $defaults);
