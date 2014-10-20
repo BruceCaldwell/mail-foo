@@ -16,6 +16,9 @@ class plugin {
 	 */
 	public $file, $dir, $tmlt_dir;
 
+	/** @var utils Class instance */
+	public $utils;
+
 	/**
 	 * Class constructor
 	 */
