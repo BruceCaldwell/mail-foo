@@ -39,7 +39,7 @@ class plugin {
 	public function build() {
 		load_plugin_textdomain('mail-remix');
 		$this->utils = new utils;
-git
+
 		if($this->opts()['enabled']) $this->init();
 		if(is_admin()) $this->init_admin();
 	}
