@@ -14,7 +14,7 @@ class plugin {
 	/**
 	 * @var string
 	 */
-	public $file, $dir, $tmlt_dir;
+	public $file, $dir, $tmlt_dir, $log_dir;
 
 	/** @var utils Class instance */
 	public $utils;
@@ -27,6 +27,7 @@ class plugin {
 		$this->dir      = dirname(__FILE__);
 		$this->tmlt_dir = $this->dir.'/templates';
 		$this->url      = plugins_url('', $this->file);
+		$this->log_dir  = WP_CONTENT_DIR.'/mail-logs';
 
 		spl_autoload_register(array($this, 'autoload'));
 
@@ -81,21 +82,22 @@ class plugin {
 	 */
 	public function opts() {
 		$defaults = array(
-			'enabled'          => TRUE,
+			'enabled'          => FALSE,
 
+			'templating'       => TRUE,
 			'template'         => 'default.html',
 
 			'parse_shortcodes' => FALSE,
 			'parse_markdown'   => FALSE,
 			'exec_php'         => FALSE,
 
-			'smtp'             => TRUE,
+			'smtp'             => FALSE,
 			'smtp_port'        => 25,
-			'smtp_host'        => 'mailtrap.io',
-			'smtp_user'        => '25401bab173ad117f',
-			'smtp_pass'        => 'eead8916929d36',
+			'smtp_host'        => '',
+			'smtp_user'        => '',
+			'smtp_pass'        => '',
 
-			'logging'          => TRUE
+			'logging'          => FALSE
 		);
 
 		$defaults = apply_filters(__NAMESPACE__.'_options_defaults', $defaults);
