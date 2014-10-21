@@ -16,7 +16,7 @@ class templater {
 	}
 
 	/**
-	 * Adds `$this->filter` to the `wp_mail` filter hook
+	 * Adds `$this->mailer` to the `phpmailer_init` filter hook
 	 */
 	public function add_actions() {
 		// We hook in at the last available hook so we can catch if other plugins already switch to the HTML content type
@@ -24,18 +24,35 @@ class templater {
 		add_filter('phpmailer_init', array($this, 'mailer'), 1, PHP_INT_MAX);
 	}
 
+	/**
+	 * Creates HTML emails and does replacement codes via the PHPMailer Object created by WordPress
+	 *
+	 * @param $mailer \PHPMailer object
+	 */
 	public function mailer($mailer) {
 		$plaintext_content = $mailer->Body;
 
-		$mailer->AltBody = $this->parse($plaintext_content, TRUE);
 		$mailer->MsgHTML($this->parse($plaintext_content));
+		$mailer->AltBody = $this->parse($plaintext_content, TRUE); // This must be AFTER the `MsgHTML` call. Otherwise it's overridden.
 	}
 
+	/**
+	 * Parses plaintext email to spec
+	 *
+	 * @param string    $text
+	 * @param bool      $plaintext
+	 * @param bool|null $shortcodes
+	 * @param bool|null $markdown
+	 * @param bool|null $php
+	 *
+	 * @return mixed|void
+	 */
 	private function parse($text, $plaintext = FALSE, $shortcodes = NULL, $markdown = NULL, $php = NULL) {
 		if($shortcodes === NULL) $shortcodes = plugin()->opts()['parse_shortcodes'];
 		if($markdown === NULL) $markdown = plugin()->opts()['parse_markdown'];
 		if($php === NULL) $php = plugin()->opts()['exec_php'];
 
+		// TODO more
 		$vars = array(
 			'site_url'         => site_url(),
 			'site_name'        => get_bloginfo('name'),
@@ -53,31 +70,55 @@ class templater {
 
 		// wpautop vs markdown
 		if(!$plaintext && !$markdown) $text = wpautop($text);
-		else $text = $this->do_markdown($text);
+		elseif(!$plaintext) $text = $this->do_markdown($text);
 
-		if(!$plaintext) $text = $this->templatize($text);
+		if(!$plaintext) $text = $this->templatize($text); // Wraps template
 
 		// Do replacement codes a second time for template
 		foreach($vars as $_replace => $_value) $text = str_ireplace('%%'.$_replace.'%%', $_value, $text);
+
+		$text = trim($text); // Important
 
 		if($plaintext)
 			return apply_filters(__NAMESPACE__.'_plaintext_message_parsed', $text);
 		return apply_filters(__NAMESPACE__.'_html_message_parsed', $text);
 	}
 
+	/**
+	 * Wraps target text with the currently selected template
+	 *
+	 * @param $text string
+	 *
+	 * @return mixed|void
+	 */
 	private function templatize($text) {
 		$template = file_get_contents(plugin()->tmlt_dir.'/'.plugin()->opts()['template']);
 
 		return apply_filters(__NAMESPACE__.'_after_templated', str_replace('%%content%%', $text, $template));
 	}
 
+	/**
+	 * Markdown Parsing. The function used to accomplish the parsing can be filtered via `add_filter` => `mail_remix_markdown_function`
+	 *
+	 * @param $str string
+	 *
+	 * @return string
+	 */
 	private function do_markdown($str) {
 		if(!class_exists('\\Michelf\\Markdown')) require($this->plugin->dir.'/md/Markdown.inc.php');
 
 		$md = apply_filters(__NAMESPACE__.'_markdown_function', array('\\Michelf\\Markdown', 'defaultTransform'));
-		return call_user_func($md, $str);
+		return (string)call_user_func($md, $str);
 	}
 
+	/**
+	 * PHP Execution and Collection
+	 *
+	 * @param string $code
+	 * @param array  $vars
+	 *
+	 * @return string
+	 */
 	private function exec_php($code, $vars = array()) {
 		if(!function_exists('eval')) return $code;
 
