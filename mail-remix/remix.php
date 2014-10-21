@@ -4,7 +4,7 @@
  * Plugin URI: http://mail-remix.com/
  * Author: Bruce Caldwell
  * Author URI: http://brucecaldwell.github.io/
- * Description: Bring your WordPress emails to the next level with HTML Templates. Supports replacement codes, shortcodes, inline PHP, and more!
+ * Description: Bring your WordPress emails to the next level with HTML Templates. Replacement Codes, Shortcodes, Markdown, Inline PHP, and more!
  * Version: 000000-dev
  */
 
