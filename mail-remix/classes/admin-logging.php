@@ -33,6 +33,10 @@ class admin_logging {
 
 				</tbody>
 			</table>
+			<h3>Logs</h3>
+			<div class="mail-remix-logs">
+				hffdsjklf;ajsdlk;
+			</div>
 		</div>
 	<?php
 	}
