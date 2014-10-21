@@ -5,14 +5,10 @@ if(!defined('WPINC'))
 	exit('Do NOT access this file directly: '.basename(__FILE__));
 
 class templater {
-
-	private $plugin, $boundary;
-
 	/**
 	 * Class constructor
 	 */
 	public function __construct() {
-		$this->plugin = plugin();
 	}
 
 	/**
@@ -105,7 +101,7 @@ class templater {
 	 * @return string
 	 */
 	private function do_markdown($str) {
-		if(!class_exists('\\Michelf\\Markdown')) require($this->plugin->dir.'/md/Markdown.inc.php');
+		if(!class_exists('\\Michelf\\Markdown')) require(plugin()->dir.'/md/Markdown.inc.php');
 
 		$md = apply_filters(__NAMESPACE__.'_markdown_function', array('\\Michelf\\Markdown', 'defaultTransform'));
 		return (string)call_user_func($md, $str);
