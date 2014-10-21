@@ -2,10 +2,14 @@
 /**
  * Plugin Name: Mail Remix
  * Plugin URI: http://mail-remix.com/
- * Author: Bruce Caldwell
- * Author URI: http://brucecaldwell.github.io/
+ * Author: WebSharks, Inc.
+ * Author URI: http://websharks-inc.com/
  * Description: Bring your WordPress emails to the next level with HTML Templates. Replacement Codes, Shortcodes, Markdown, Inline PHP, and more!
  * Version: 000000-dev
+ *
+ * Copyright: © 2014 WebSharks, Inc.
+ * License: GNU General Public License Version 2
+ * Contributors: WebSharks
  */
 
 if(!defined('WPINC'))
