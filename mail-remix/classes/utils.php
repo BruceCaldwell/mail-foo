@@ -8,7 +8,13 @@ class utils {
 	public function __construct() {
 	}
 
-	public function clean_request_vars($req = FALSE) {
-		if(!$req) $req = $_REQUEST;
+	public function clean_request_vars($req = array()) {
+		if(empty($req)) $req = $_REQUEST;
+		return array_map(array($this, 'clean_string'), $req);
+	}
+
+	private function clean_string($str) {
+		if(!$str) return $str;
+		return esc_html(stripslashes($str));
 	}
 }

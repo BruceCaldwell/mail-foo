@@ -26,6 +26,6 @@ class smtp {
 			$mailer->Port     = $opts['smtp_port'];
 			$mailer->Username = $opts['smtp_user'];
 			$mailer->Password = $opts['smtp_pass'];
-		});
+		}, 1, 1);
 	}
 }
