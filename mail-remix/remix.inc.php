@@ -38,7 +38,8 @@ class plugin {
 	 */
 	public function build() {
 		load_plugin_textdomain('mail-remix');
-
+		$this->utils = new utils;
+git
 		if($this->opts()['enabled']) $this->init();
 		if(is_admin()) $this->init_admin();
 	}
@@ -80,7 +81,7 @@ class plugin {
 	 */
 	public function opts() {
 		$defaults = array(
-			'enabled'          => FALSE,
+			'enabled'          => TRUE,
 
 			'template'         => 'default.html',
 
@@ -88,11 +89,11 @@ class plugin {
 			'parse_markdown'   => FALSE,
 			'exec_php'         => FALSE,
 
-			'smtp'             => FALSE,
+			'smtp'             => TRUE,
 			'smtp_port'        => 25,
-			'smtp_host'        => '',
-			'smtp_user'        => '',
-			'smtp_pass'        => '',
+			'smtp_host'        => 'mailtrap.io',
+			'smtp_user'        => '25401bab173ad117f',
+			'smtp_pass'        => 'eead8916929d36',
 
 			'logging'          => TRUE
 		);
