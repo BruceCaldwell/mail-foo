@@ -12,7 +12,7 @@ if(!defined('WPINC'))
 class plugin {
 
 	/**
-	 * @var string
+	 * @vars string
 	 */
 	public $file, $dir, $tmlt_dir, $log_dir;
 
@@ -43,6 +43,7 @@ class plugin {
 
 		if($this->opts()['enabled']) $this->init();
 		if(is_admin()) $this->init_admin();
+		if($this->opts()['logging']) new logger;
 	}
 
 	/**
@@ -97,7 +98,7 @@ class plugin {
 			'smtp_user'        => '',
 			'smtp_pass'        => '',
 
-			'logging'          => FALSE
+			'logging'          => TRUE
 		);
 
 		$defaults = apply_filters(__NAMESPACE__.'_options_defaults', $defaults);
