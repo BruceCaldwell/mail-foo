@@ -11,12 +11,14 @@ class logger {
 	public function filter($args) {
 		$log = array();
 
-		$log[] = '=== '.date('Y-m-d H:i:s').' ===';
+		$log[] = '============';
+		$log[] = '  Start Log:'.date('Y-m-d H:i:s');
+		$log[] = '============'."\r\n";
 		$log[] = '```';
 		$log[] = print_r($args, TRUE);
 		$log[] = '```';
 
-		@file_put_contents(plugin()->log_dir.'/'.date('Y-m').'.log', implode("\r\n", $log)."\r\n\r\n", FILE_APPEND);
+		@file_put_contents(plugin()->log_dir.'/'.date('Y-m').'.log', implode("\r\n", $log)."\r\n\r\n\r\n", FILE_APPEND);
 
 		return $args;
 	}
