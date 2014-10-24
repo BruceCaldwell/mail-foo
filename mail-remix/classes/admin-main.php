@@ -16,7 +16,7 @@ class admin_main {
 
 		$opts = plugin()->opts();
 
-		$checkboxes = array('enabled', 'parse_shortcodes', 'parse_markdown', 'exec_php');
+		$checkboxes = array('enabled', 'parse_shortcodes', 'parse_markdown', 'exec_php', 'smtp');
 
 		foreach($checkboxes as $name) {
 			if(isset($_p[$name]) && $_p[$name])
@@ -69,34 +69,26 @@ class admin_main {
 								<input type="checkbox" <?php if(plugin()->opts()['exec_php']) echo 'checked="checked"'; ?> name="exec_php" id="mail_remix_exec_php" />
 								Execute PHP
 							</label>
-							<p class="description">Check these additional processing options to perform custom operations within your custom emails.</p>
+							<p class="description">Check these additional processing options to perform custom operations within your emails.</p>
 						</td>
 					</tr>
 					</tbody>
 				</table>
 
-				<h3>Templates</h3>
+				<h3>SMTP</h3>
 				<table class="form-table">
 					<tbody>
 
 					<tr>
 						<th scope="row">
-							Current Template
+							Use SMTP Delivery
 						</th>
 						<td>
-							<select>
-								<option>This Template</option>
-								<option>That Template</option>
-							</select>
-						</td>
-					</tr>
-
-					<tr>
-						<th scope="row">
-							Template Colors
-						</th>
-						<td>
-							<input type="text" />
+							<label for="mail_remix_smtp" style="display: block;">
+								<input type="checkbox" <?php if(plugin()->opts()['smtp']) echo 'checked="checked"'; ?> name="smtp" id="mail_remix_smtp" />
+								Send Mail via SMTP Server
+							</label>
+							<p class="description">Check this box to send emails via <a href="http://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol">Simple Mail Transfer Protocol</a> server integration.</p>
 						</td>
 					</tr>
 

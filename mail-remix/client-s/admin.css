@@ -17,3 +17,9 @@
 
 	display: block;
 }
+
+/* Template Editor */
+
+.remix-templates-editor {
+	min-width: 768px;
+}
