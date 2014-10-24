@@ -4,6 +4,11 @@ namespace mail_remix;
 if(!defined('WPINC'))
 	exit('Do NOT access this file directly: '.basename(__FILE__));
 
+/**
+ * Class templater
+ *
+ * @package mail_remix
+ */
 class templater {
 	/**
 	 * Class constructor

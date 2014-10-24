@@ -1,13 +1,28 @@
 <?php
 namespace mail_remix;
 
+/**
+ * Class logger
+ *
+ * @package mail_remix
+ */
 class logger {
+	/**
+	 * Adds filter on the `wp_mail` action for logging calls to the `wp_mail()` function.
+	 */
 	public function __construct() {
 		if(!$this->check_logs_dir()) return;
 
 		add_filter('wp_mail', array($this, 'filter'));
 	}
 
+	/**
+	 * Writes to log files on the `wp_mail` hook
+	 *
+	 * @param $args
+	 *
+	 * @return mixed
+	 */
 	public function filter($args) {
 		$log = array();
 
@@ -23,6 +38,11 @@ class logger {
 		return $args;
 	}
 
+	/**
+	 * Verifies that the logs directory exists and is writable.
+	 *
+	 * @return bool
+	 */
 	private function check_logs_dir() {
 		$dir = plugin()->log_dir;
 
@@ -39,6 +59,9 @@ class logger {
 		return TRUE;
 	}
 
+	/**
+	 * If the logs directory is unwritable, we print an error (if logging is enabled)
+	 */
 	public function print_write_error() {
 		if(current_user_can('activate_plugins'))
 			echo '<div class="error"><p>'

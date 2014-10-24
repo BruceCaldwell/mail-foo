@@ -4,6 +4,11 @@ namespace mail_remix;
 if(!defined('WPINC'))
 	exit('Do NOT access this file directly: '.basename(__FILE__));
 
+/**
+ * Class smtp
+ *
+ * @package mail_remix
+ */
 class smtp {
 
 	private $plugin;
@@ -16,6 +21,7 @@ class smtp {
 		if($opts['smtp']) $this->force_smtp();
 	}
 
+	// TODO Authentication types
 	private function force_smtp() {
 		add_action('phpmailer_init', function ($mailer) {
 			$opts = $this->plugin->opts();

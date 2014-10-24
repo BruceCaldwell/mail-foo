@@ -2,6 +2,11 @@
 
 namespace mail_remix;
 
+/**
+ * Class admin_templates
+ *
+ * @package mail_remix
+ */
 class admin_templates {
 	public function __construct() {
 	}
