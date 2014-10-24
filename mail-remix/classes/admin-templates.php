@@ -37,14 +37,23 @@ class admin_templates {
 
 				<h3>Editor</h3>
 				<div class="remix-editor-colors">
-					<label class="special-label">
-						Primary <br />
-						<input type="text" class="remix-colorpicker" />
-					</label>
+					<table class="form-table">
+						<tbody>
+
+						<tr>
+							<th scope="row">
+								<label for="primary-color">Primary Color</label>
+							</th>
+							<td>
+								<input type="color" value="#442244" id="primary-color" />
+							</td>
+						</tr>
+
+						</tbody>
+					</table>
 				</div>
+				<div class="remix-templates-preview"></div>
 			</div>
-			<div class="remix-templates-preview"></div>
-		</div>
 	<?php
 	}
 }

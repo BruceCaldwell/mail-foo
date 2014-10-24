@@ -2,6 +2,10 @@
 	min-width : 300px;
 }
 
+.wrap input[type=color] {
+	min-width: 125px;
+}
+
 .wrap label {
 	margin-bottom: 10px;
 }
@@ -14,8 +18,6 @@
 
 	font-size: 14px;
 	color: #222222;
-
-	display: block;
 }
 
 /* Template Editor */

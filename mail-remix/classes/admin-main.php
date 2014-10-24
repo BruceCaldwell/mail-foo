@@ -16,7 +16,7 @@ class admin_main {
 
 		$opts = plugin()->opts();
 
-		$checkboxes = array('enabled', 'parse_shortcodes', 'parse_markdown', 'exec_php', 'smtp');
+		$checkboxes = array('enabled', 'parse_shortcodes', 'parse_markdown', 'exec_php', 'smtp', 'logging');
 
 		foreach($checkboxes as $name) {
 			if(isset($_p[$name]) && $_p[$name])
@@ -75,7 +75,7 @@ class admin_main {
 					</tbody>
 				</table>
 
-				<h3>SMTP</h3>
+				<h3>SMTP Emails</h3>
 				<table class="form-table">
 					<tbody>
 
@@ -89,6 +89,26 @@ class admin_main {
 								Send Mail via SMTP Server
 							</label>
 							<p class="description">Check this box to send emails via <a href="http://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol">Simple Mail Transfer Protocol</a> server integration.</p>
+						</td>
+					</tr>
+
+					</tbody>
+				</table>
+
+				<h3>Additional</h3>
+				<table class="form-table">
+					<tbody>
+
+					<tr>
+						<th scope="row">
+							Enable Logging?
+						</th>
+						<td>
+							<label for="mail_remix_enable_logging">
+								<input name="logging" <?php if(plugin()->opts()['logging']) echo 'checked="checked"'; ?> id="mail_remix_enable_logging" type="checkbox" />
+								Yes, log all outbound emails via <code>wp_mail()</code>.
+							</label>
+							<p class="description">Log files are stored in <code><?php echo plugin()->log_dir; ?></code>.</p>
 						</td>
 					</tr>
 
