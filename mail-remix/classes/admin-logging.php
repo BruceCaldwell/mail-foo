@@ -45,8 +45,8 @@ class admin_logging {
 		else $log_file = '';
 
 		if($log_file && is_file(plugin()->log_dir.'/'.$log_file) && is_readable(plugin()->log_dir.'/'.$log_file))
-			$log_file_content = file_get_contents(plugin()->log_dir.'/'.$log_file);
-		else $log_file_content = '';
+			$log_file_content = fopen(plugin()->log_dir.'/'.$log_file, 'r');
+		else $log_file_content = FALSE;
 
 		?>
 		<div class="wrap">
@@ -73,7 +73,11 @@ class admin_logging {
 				</form>
 
 				<span class="special-label">Details</span>
-				<textarea onchange="return false;" onkeypress="return false;" style="width: 100%; max-width: 100%; min-width: 500px; min-height: 350px;"><?php echo $log_file_content; ?></textarea>
+				<textarea onchange="return false;" onkeypress="return false;" style="width: 100%; max-width: 100%; min-width: 500px; min-height: 350px;"><?php
+					if($log_file_content !== FALSE)
+						while(!feof($log_file_content))
+							echo fgets($log_file_content);
+					?></textarea>
 			</div>
 		</div>
 	<?php

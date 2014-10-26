@@ -94,6 +94,9 @@ class plugin {
 
 			'smtp'             => FALSE,
 			'smtp_port'        => 25,
+
+			'smtp_auth'        => FALSE,
+			'smtp_auth_mode'   => 'ssl',
 			'smtp_host'        => '',
 			'smtp_user'        => '',
 			'smtp_pass'        => '',
