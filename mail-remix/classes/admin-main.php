@@ -21,7 +21,7 @@ class admin_main {
 
 		$opts = plugin()->opts();
 
-		$checkboxes = array('enabled', 'parse_shortcodes', 'parse_markdown', 'exec_php', 'smtp', 'smtp_auth', 'logging');
+		$checkboxes = array('enabled', 'parse_shortcodes', 'parse_markdown', 'exec_php', 'logging');
 
 		foreach($checkboxes as $name) {
 			if(isset($_p[$name]) && $_p[$name])
@@ -29,15 +29,13 @@ class admin_main {
 			else $opts[$name] = FALSE;
 		}
 
-		$text_forms = array('smtp_host', 'smtp_user', 'smtp_pass', 'smtp_port');
+		$text_forms = array();
 
 		foreach($text_forms as $name) {
 			if(isset($_p[$name]) && $_p[$name])
 				$opts[$name] = sanitize_text_field($_p[$name]);
 			else $opts[$name] = '';
 		}
-
-		$opts['smtp_port'] = (int)$opts['smtp_port'];
 
 		update_site_option(__NAMESPACE__.'_options', $opts);
 	}
@@ -87,82 +85,6 @@ class admin_main {
 							<p class="description">Check these additional processing options to perform custom operations within your emails.</p>
 						</td>
 					</tr>
-					</tbody>
-				</table>
-
-				<h3>SMTP Emails</h3>
-				<table class="form-table">
-					<tbody>
-
-					<tr>
-						<th scope="row">
-							Use SMTP Delivery
-						</th>
-						<td>
-							<label for="mail_remix_smtp">
-								<input type="checkbox" <?php if(plugin()->opts()['smtp']) echo 'checked="checked"'; ?> name="smtp" id="mail_remix_smtp" />
-								Send Mail via SMTP Server
-							</label>
-							<p class="description">Check this box to send emails via <a href="http://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol">Simple Mail Transfer Protocol</a> server integration.</p>
-						</td>
-					</tr>
-
-					<tr>
-						<th scope="row">
-							SMTP Host
-						</th>
-						<td>
-							<label for="mail_remix_smtp_host">
-								<input type="text" name="smtp_host" value="<?php echo plugin()->opts()['smtp_host']; ?>" placeholder="test.example.com" id="mail_remix_smtp_host" />
-							</label>
-						</td>
-					</tr>
-
-					<tr>
-						<th scope="row">
-							SMTP Port
-						</th>
-						<td>
-							<label for="mail_remix_smtp_port">
-								<input type="number" name="smtp_port" value="<?php echo (string)plugin()->opts()['smtp_port']; ?>" placeholder="25" id="mail_remix_smtp_port" />
-							</label>
-						</td>
-					</tr>
-
-					<tr>
-						<th scope="row">
-							Authenticate
-						</th>
-						<td>
-							<label for="mail_remix_smtp_auth">
-								<input type="checkbox" <?php if(plugin()->opts()['smtp_auth']) echo 'checked="checked"'; ?> name="smtp_auth" id="mail_remix_smtp_auth" />
-								Use Authentication when directing mail via SMTP
-							</label>
-						</td>
-					</tr>
-
-					<tr>
-						<th scope="row">
-							SMTP Username
-						</th>
-						<td>
-							<label for="mail_remix_smtp_user">
-								<input type="text" autocomplete="off" name="smtp_user" value="<?php echo plugin()->opts()['smtp_user']; ?>" id="mail_remix_smtp_user" />
-							</label>
-						</td>
-					</tr>
-
-					<tr>
-						<th scope="row">
-							SMTP Password
-						</th>
-						<td>
-							<label for="mail_remix_smtp_pass">
-								<input type="password" autocomplete="off" name="smtp_pass" value="<?php echo plugin()->opts()['smtp_pass']; ?>" id="mail_remix_smtp_pass" />
-							</label>
-						</td>
-					</tr>
-
 					</tbody>
 				</table>
 
