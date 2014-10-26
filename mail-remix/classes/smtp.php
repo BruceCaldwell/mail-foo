@@ -28,14 +28,15 @@ class smtp {
 
 			$mailer->IsSMTP();
 
-			if($opts['smtp_auth_mode'] !== 'plaintext' && !empty($opts['smtp_auth_mode']))
-				$mailer->SMTPSecure = $opts['smtp_auth_mode'];
-
 			$mailer->Host = $opts['smtp_host'];
 			$mailer->Port = $opts['smtp_port'];
 
 			if($opts['smtp_auth']) {
 				$mailer->SMTPAuth = TRUE;
+
+				if($opts['smtp_auth_mode'] !== 'plaintext' && !empty($opts['smtp_auth_mode']))
+					$mailer->SMTPSecure = $opts['smtp_auth_mode'];
+
 				$mailer->Username = $opts['smtp_user'];
 				$mailer->Password = $opts['smtp_pass'];
 			}
