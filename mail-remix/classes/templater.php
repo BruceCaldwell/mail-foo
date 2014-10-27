@@ -59,7 +59,10 @@ class templater {
 			'site_name'        => get_bloginfo('name'),
 			'site_description' => get_bloginfo('description'),
 			'admin_email'      => get_bloginfo('admin_email'),
-			'year'             => date('Y')
+			'year'             => date('Y'),
+			'icon_fb'          => plugins_url('', plugin()->file).'/client-s/icons/fb.png',
+			'icon_tw'          => plugins_url('', plugin()->file).'/client-s/icons/tw.png',
+			'icon_gp'          => plugins_url('', plugin()->file).'/client-s/icons/gp.png'
 		);
 
 		// Replacement Codes
