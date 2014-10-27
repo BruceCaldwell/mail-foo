@@ -19,7 +19,8 @@ class admin_main {
 
 		$_p = plugin()->utils->clean_request_vars($_POST);
 
-		$opts = plugin()->opts();
+		$opts    = plugin()->opts();
+		$log_opt = $opts['logging'];
 
 		$checkboxes = array('enabled', 'parse_shortcodes', 'parse_markdown', 'exec_php', 'logging');
 
@@ -38,6 +39,8 @@ class admin_main {
 		}
 
 		update_site_option(__NAMESPACE__.'_options', $opts);
+
+		if($log_opt !== $opts['logging']) echo '<script type="application/javascript">window.location.reload();</script>';
 	}
 
 	public function do_print() {

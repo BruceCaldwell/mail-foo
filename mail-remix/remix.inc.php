@@ -41,7 +41,7 @@ class plugin {
 		load_plugin_textdomain('mail-remix');
 		$this->utils = new utils;
 
-		if($this->opts()['enabled']) $this->init();
+		$this->init();
 		if(is_admin()) $this->init_admin();
 		if($this->opts()['logging']) new logger;
 	}
@@ -51,8 +51,10 @@ class plugin {
 	 */
 	public function init() {
 		$templater = new templater();
-		$templater->add_actions();
 		new smtp;
+
+		if($this->opts()['enabled'])
+			$templater->add_actions();
 	}
 
 	/**
@@ -86,7 +88,7 @@ class plugin {
 			'enabled'          => FALSE,
 
 			'templating'       => TRUE,
-			'template'         => 'default.html',
+			'template'         => 'clean/index.html',
 
 			'parse_shortcodes' => FALSE,
 			'parse_markdown'   => FALSE,
@@ -96,7 +98,7 @@ class plugin {
 			'smtp_port'        => 25,
 
 			'smtp_auth'        => FALSE,
-			'smtp_auth_mode'   => 'ssl',
+			'smtp_auth_mode'   => 'plaintext',
 			'smtp_host'        => '',
 			'smtp_user'        => '',
 			'smtp_pass'        => '',

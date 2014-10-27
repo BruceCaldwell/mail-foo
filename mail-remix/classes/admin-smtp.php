@@ -30,6 +30,9 @@ class admin_smtp {
 			else $opts[$name] = '';
 		}
 
+		if(isset($_p['smtp_auth_mode']))
+			$opts['smtp_auth_mode'] = sanitize_text_field($_p['smtp_auth_mode']);
+
 		$opts['smtp_port'] = (int)$opts['smtp_port'];
 
 		update_site_option(__NAMESPACE__.'_options', $opts);
@@ -83,14 +86,20 @@ class admin_smtp {
 							Connection Type
 						</th>
 						<td>
-							<select>
-								<option value="plaintext">Plain Text</option>
-								<option value="smtp">SMTP</option>
-								<option value="tls">TLS</option>
+							<select name="smtp_auth_mode">
+								<?php $opt = plugin()->opts()['smtp_auth_mode']; ?>
+								<option <?php if($opt === 'plaintext') echo 'selected="selected"'; ?> value="plaintext">Plain Text</option>
+								<option <?php if($opt === 'ssh') echo 'selected="selected"'; ?> value="ssh">SSH</option>
+								<option <?php if($opt === 'tls') echo 'selected="selected"'; ?> value="tls">TLS</option>
 							</select>
 						</td>
 					</tr>
+					</tbody>
+				</table>
 
+				<h3>SMTP Auth</h3>
+				<table class="form-table">
+					<tbody>
 					<tr>
 						<th scope="row">
 							Authenticate

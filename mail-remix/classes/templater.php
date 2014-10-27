@@ -59,6 +59,7 @@ class templater {
 			'site_name'        => get_bloginfo('name'),
 			'site_description' => get_bloginfo('description'),
 			'admin_email'      => get_bloginfo('admin_email'),
+			'year'             => date('Y')
 		);
 
 		// Replacement Codes
@@ -69,9 +70,9 @@ class templater {
 		// PHP Execution
 		if($php) $text = $this->exec_php($text);
 
-		// wpautop vs markdown
-		if(!$plaintext && !$markdown) $text = wpautop($text);
-		elseif(!$plaintext) $text = $this->do_markdown($text);
+		// Leaving autop to Markdown causes problems with single-line breaks. Let WordPress handle that.
+		if(!$plaintext) $text = wpautop($text);
+		if(!$plaintext && $markdown) $text = $this->do_markdown($text);
 
 		if(!$plaintext) $text = $this->templatize($text); // Wraps template
 
@@ -93,7 +94,8 @@ class templater {
 	 * @return mixed|void
 	 */
 	private function templatize($text) {
-		$template = file_get_contents(plugin()->tmlt_dir.'/'.plugin()->opts()['template']);
+		$template = file_get_contents(plugin()->tmlt_dir.'/'./*plugin()->opts()['template']*/
+		                              'clean/index.html');
 
 		return apply_filters(__NAMESPACE__.'_after_templated', str_replace('%%content%%', $text, $template));
 	}

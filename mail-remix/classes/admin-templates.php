@@ -17,7 +17,7 @@ class admin_templates {
 	public function do_print() {
 		?>
 		<div class="wrap">
-			<h2>Mail Remix | Templates</h2>
+			<h2>Mail Remix | Templating</h2>
 
 			<div class="remix-templates-editor">
 				<h3>Config</h3>
@@ -33,7 +33,7 @@ class admin_templates {
 								<option>This Template</option>
 								<option>That Template</option>
 							</select>
-							<p class="description">Check these additional processing options to perform custom operations within your custom emails.</p>
+							<p class="description">Customize your selected theme below.</p>
 						</td>
 					</tr>
 
@@ -59,6 +59,7 @@ class admin_templates {
 				</div>
 				<div class="remix-templates-preview"></div>
 			</div>
+			<button class="button button-primary">Save All Changes</button>
 	<?php
 	}
 }
