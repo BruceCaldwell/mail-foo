@@ -21,7 +21,7 @@ class admin {
 		$page = add_menu_page(__('Mail Remix', __NAMESPACE__), __('Mail Remix', __NAMESPACE__), 'manage_options', 'mail-remix', array($this, 'main')/*, plugins_url('', plugin()->file).'/client-s/icon.png'*/);
 		add_submenu_page('mail-remix', __('Mail Remix | Basic Config', __NAMESPACE__), __('Basic Config', __NAMESPACE__), 'manage_options', 'mail-remix', array($this, 'main'));
 
-		$smtp_page      = add_submenu_page('mail-remix', __('Mail Remix | Transport', __NAMESPACE__), __('Transport', __NAMESPACE__), 'manage_options', 'remix-smtp', array($this, 'smtp'));
+		$smtp_page      = add_submenu_page('mail-remix', __('Mail Remix | Transport', __NAMESPACE__), __('Transport', __NAMESPACE__), 'manage_options', 'remix-transport', array($this, 'transport'));
 		$templates_page = add_submenu_page('mail-remix', __('Mail Remix | Templating', __NAMESPACE__), __('Templating', __NAMESPACE__), 'manage_options', 'remix-templates', array($this, 'templates'));
 
 		// Scripts
@@ -55,8 +55,8 @@ class admin {
 		$page->do_print();
 	}
 
-	public function smtp() {
-		$page = new admin_smtp;
+	public function transport() {
+		$page = new admin_transport;
 		$page->maybe_save_opts();
 		$page->do_print();
 	}

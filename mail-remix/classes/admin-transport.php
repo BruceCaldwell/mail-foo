@@ -2,7 +2,7 @@
 
 namespace mail_remix;
 
-class admin_smtp {
+class admin_transport {
 	public function __construct() {
 	}
 
