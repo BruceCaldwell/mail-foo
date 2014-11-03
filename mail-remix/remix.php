@@ -15,6 +15,7 @@
 if(!defined('WPINC'))
 	exit('Do NOT access this file directly: '.basename(__FILE__));
 
-if(require(dirname(__FILE__).'/wp-php53.php'))
-	require_once dirname(__FILE__).'/remix.inc.php';
-else wp_php53_notice('Mail Remix');
+$GLOBALS['wp_php_rv'] = '5.3';
+if(require(dirname(__FILE__).'/wp-php-rv.php'))
+	require dirname(__FILE__).'/remix.inc.php';
+else wp_php_rv_notice();
