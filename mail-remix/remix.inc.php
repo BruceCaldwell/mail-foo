@@ -41,9 +41,11 @@ class plugin {
 		load_plugin_textdomain('mail-remix');
 		$this->utils = new utils;
 
+		$opts = $this->opts();
+
 		$this->init();
 		if(is_admin()) $this->init_admin();
-		if($this->opts()['logging']) new logger;
+		if($opts['logging']) new logger;
 	}
 
 	/**
@@ -53,7 +55,9 @@ class plugin {
 		$templater = new templater();
 		new smtp;
 
-		if($this->opts()['enabled'])
+		$opts = $this->opts();
+
+		if($opts['enabled'])
 			$templater->add_actions();
 	}
 

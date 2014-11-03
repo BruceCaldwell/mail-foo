@@ -49,9 +49,11 @@ class templater {
 	 * @return mixed|void
 	 */
 	private function parse($text, $plaintext = FALSE, $shortcodes = NULL, $markdown = NULL, $php = NULL) {
-		if($shortcodes === NULL) $shortcodes = plugin()->opts()['parse_shortcodes'];
-		if($markdown === NULL) $markdown = plugin()->opts()['parse_markdown'];
-		if($php === NULL) $php = plugin()->opts()['exec_php'];
+		$opts = plugin()->opts();
+
+		if($shortcodes === NULL) $shortcodes = $opts['parse_shortcodes'];
+		if($markdown === NULL) $markdown = $opts['parse_markdown'];
+		if($php === NULL) $php = $opts['exec_php'];
 
 		// TODO more
 		$vars = array(
@@ -97,7 +99,9 @@ class templater {
 	 * @return mixed|void
 	 */
 	private function templatize($text) {
-		$template = file_get_contents(plugin()->tmlt_dir.'/'.plugin()->opts()['template']);
+		$opts = plugin()->opts();
+
+		$template = file_get_contents(plugin()->tmlt_dir.'/'.$opts['template']);
 
 		return apply_filters(__NAMESPACE__.'_after_templated', str_replace('%%content%%', $text, $template));
 	}

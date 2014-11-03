@@ -29,7 +29,9 @@ class admin {
 		add_action('load-'.$smtp_page, array($this, 'init_scripts'));
 		add_action('load-'.$templates_page, array($this, 'init_scripts'));
 
-		if(plugin()->opts()['logging']) {
+		$opts = plugin()->opts();
+
+		if($opts['logging']) {
 			$logging_page = add_submenu_page('mail-remix', __('Mail Remix | Logging', __NAMESPACE__), __('Logging', __NAMESPACE__), 'manage_options', 'remix-logging', array($this, 'logging'));
 			add_action('load-'.$logging_page, array($this, 'init_scripts'));
 		}

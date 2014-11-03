@@ -44,6 +44,8 @@ class admin_main {
 	}
 
 	public function do_print() {
+		$opts = plugin()->opts();
+
 		?>
 		<div class="wrap">
 			<h2>Mail Remix | Config</h2>
@@ -59,7 +61,7 @@ class admin_main {
 						</th>
 						<td>
 							<label for="mail_remix_enable">
-								<input type="checkbox" <?php if(plugin()->opts()['enabled']) echo 'checked="checked"'; ?> name="enabled" id="mail_remix_enable" />
+								<input type="checkbox" <?php if($opts['enabled']) echo 'checked="checked"'; ?> name="enabled" id="mail_remix_enable" />
 								Enable Parsing to HTML, Templating, Replacement Codes, and more
 							</label>
 							<p class="description">Check box to enable both HTML templating and the additional processing items below.</p>
@@ -72,17 +74,17 @@ class admin_main {
 						</th>
 						<td>
 							<label for="mail_remix_parse_shortcodes" style="display: block;">
-								<input type="checkbox" <?php if(plugin()->opts()['parse_shortcodes']) echo 'checked="checked"'; ?> name="parse_shortcodes" id="mail_remix_parse_shortcodes" />
+								<input type="checkbox" <?php if($opts['parse_shortcodes']) echo 'checked="checked"'; ?> name="parse_shortcodes" id="mail_remix_parse_shortcodes" />
 								Parse Shortcodes
 							</label>
 
 							<label for="mail_remix_parse_markdown" style="display: block;">
-								<input type="checkbox" <?php if(plugin()->opts()['parse_markdown']) echo 'checked="checked"'; ?> name="parse_markdown" id="mail_remix_parse_markdown" />
+								<input type="checkbox" <?php if($opts['parse_markdown']) echo 'checked="checked"'; ?> name="parse_markdown" id="mail_remix_parse_markdown" />
 								Parse Markdown
 							</label>
 
 							<label for="mail_remix_exec_php" style="display: block;">
-								<input type="checkbox" <?php if(plugin()->opts()['exec_php']) echo 'checked="checked"'; ?> name="exec_php" id="mail_remix_exec_php" />
+								<input type="checkbox" <?php if($opts['exec_php']) echo 'checked="checked"'; ?> name="exec_php" id="mail_remix_exec_php" />
 								Execute PHP
 							</label>
 							<p class="description">Check these additional processing options to perform custom operations within your emails.</p>
@@ -101,7 +103,7 @@ class admin_main {
 						</th>
 						<td>
 							<label for="mail_remix_enable_logging">
-								<input name="logging" <?php if(plugin()->opts()['logging']) echo 'checked="checked"'; ?> id="mail_remix_enable_logging" type="checkbox" />
+								<input name="logging" <?php if($opts['logging']) echo 'checked="checked"'; ?> id="mail_remix_enable_logging" type="checkbox" />
 								Yes, log all outbound emails via <code>wp_mail()</code>.
 							</label>
 							<p class="description">Log files are stored in <code><?php echo plugin()->log_dir; ?></code>.</p>

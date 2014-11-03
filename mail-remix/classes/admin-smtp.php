@@ -39,6 +39,7 @@ class admin_smtp {
 	}
 
 	public function do_print() {
+		$opts = plugin()->opts();
 		?>
 		<div class="wrap">
 			<h2>Mail Remix | Transport</h2>
@@ -52,7 +53,7 @@ class admin_smtp {
 						</th>
 						<td>
 							<label for="mail_remix_smtp">
-								<input type="checkbox" <?php if(plugin()->opts()['smtp']) echo 'checked="checked"'; ?> name="smtp" id="mail_remix_smtp" />
+								<input type="checkbox" <?php if($opts['smtp']) echo 'checked="checked"'; ?> name="smtp" id="mail_remix_smtp" />
 								Send Mail via SMTP Server
 							</label>
 							<p class="description">Check this box to send emails via <a href="http://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol">Simple Mail Transfer Protocol</a> server integration.</p>
@@ -65,7 +66,7 @@ class admin_smtp {
 						</th>
 						<td>
 							<label for="mail_remix_smtp_host">
-								<input type="text" name="smtp_host" value="<?php echo plugin()->opts()['smtp_host']; ?>" placeholder="test.example.com" id="mail_remix_smtp_host" />
+								<input type="text" name="smtp_host" value="<?php echo $opts['smtp_host']; ?>" placeholder="test.example.com" id="mail_remix_smtp_host" />
 							</label>
 						</td>
 					</tr>
@@ -76,7 +77,7 @@ class admin_smtp {
 						</th>
 						<td>
 							<label for="mail_remix_smtp_port">
-								<input type="number" name="smtp_port" value="<?php echo (string)plugin()->opts()['smtp_port']; ?>" placeholder="25" id="mail_remix_smtp_port" />
+								<input type="number" name="smtp_port" value="<?php echo (string)$opts['smtp_port']; ?>" placeholder="25" id="mail_remix_smtp_port" />
 							</label>
 						</td>
 					</tr>
@@ -87,7 +88,7 @@ class admin_smtp {
 						</th>
 						<td>
 							<select name="smtp_auth_mode">
-								<?php $opt = plugin()->opts()['smtp_auth_mode']; ?>
+								<?php $opt = $opts['smtp_auth_mode']; ?>
 								<option <?php if($opt === 'plaintext') echo 'selected="selected"'; ?> value="plaintext">Plain Text</option>
 								<option <?php if($opt === 'ssh') echo 'selected="selected"'; ?> value="ssh">SSH</option>
 								<option <?php if($opt === 'tls') echo 'selected="selected"'; ?> value="tls">TLS</option>
@@ -106,7 +107,7 @@ class admin_smtp {
 						</th>
 						<td>
 							<label for="mail_remix_smtp_auth">
-								<input type="checkbox" <?php if(plugin()->opts()['smtp_auth']) echo 'checked="checked"'; ?> name="smtp_auth" id="mail_remix_smtp_auth" />
+								<input type="checkbox" <?php if($opts['smtp_auth']) echo 'checked="checked"'; ?> name="smtp_auth" id="mail_remix_smtp_auth" />
 								Use Authentication when directing mail via SMTP
 							</label>
 						</td>
@@ -118,7 +119,7 @@ class admin_smtp {
 						</th>
 						<td>
 							<label for="mail_remix_smtp_user">
-								<input type="text" autocomplete="off" name="smtp_user" value="<?php echo plugin()->opts()['smtp_user']; ?>" id="mail_remix_smtp_user" />
+								<input type="text" autocomplete="off" name="smtp_user" value="<?php echo $opts['smtp_user']; ?>" id="mail_remix_smtp_user" />
 							</label>
 						</td>
 					</tr>
@@ -129,7 +130,7 @@ class admin_smtp {
 						</th>
 						<td>
 							<label for="mail_remix_smtp_pass">
-								<input type="password" autocomplete="off" name="smtp_pass" value="<?php echo plugin()->opts()['smtp_pass']; ?>" id="mail_remix_smtp_pass" />
+								<input type="password" autocomplete="off" name="smtp_pass" value="<?php echo $opts['smtp_pass']; ?>" id="mail_remix_smtp_pass" />
 							</label>
 						</td>
 					</tr>
