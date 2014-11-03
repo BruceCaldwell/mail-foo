@@ -97,8 +97,7 @@ class templater {
 	 * @return mixed|void
 	 */
 	private function templatize($text) {
-		$template = file_get_contents(plugin()->tmlt_dir.'/'./*plugin()->opts()['template']*/
-		                              'clean/index.html');
+		$template = file_get_contents(plugin()->tmlt_dir.'/'.plugin()->opts()['template']);
 
 		return apply_filters(__NAMESPACE__.'_after_templated', str_replace('%%content%%', $text, $template));
 	}

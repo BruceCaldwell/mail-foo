@@ -103,7 +103,7 @@ class plugin {
 			'smtp_user'        => '',
 			'smtp_pass'        => '',
 
-			'logging'          => TRUE
+			'logging'          => FALSE
 		);
 
 		$defaults = apply_filters(__NAMESPACE__.'_options_defaults', $defaults);
