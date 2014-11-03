@@ -102,7 +102,7 @@ class plugin {
 			'smtp_port'        => 25,
 
 			'smtp_auth'        => FALSE,
-			'smtp_auth_mode'   => 'plaintext',
+			'smtp_con_mode'    => 'plaintext',
 			'smtp_host'        => '',
 			'smtp_user'        => '',
 			'smtp_pass'        => '',

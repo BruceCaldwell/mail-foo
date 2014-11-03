@@ -34,12 +34,12 @@ class smtp {
 			if($opts['smtp_auth']) {
 				$mailer->SMTPAuth = TRUE;
 
-				if($opts['smtp_auth_mode'] !== 'plaintext' && !empty($opts['smtp_auth_mode']))
-					$mailer->SMTPSecure = $opts['smtp_auth_mode'];
-
 				$mailer->Username = $opts['smtp_user'];
 				$mailer->Password = $opts['smtp_pass'];
 			}
+
+			if($opts['smtp_con_mode'] !== 'plaintext' && !empty($opts['smtp_con_mode']))
+				$mailer->SMTPSecure = $opts['smtp_con_mode'];
 		}, 1, 1);
 	}
 }

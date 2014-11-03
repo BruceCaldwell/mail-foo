@@ -30,8 +30,8 @@ class admin_smtp {
 			else $opts[$name] = '';
 		}
 
-		if(isset($_p['smtp_auth_mode']))
-			$opts['smtp_auth_mode'] = sanitize_text_field($_p['smtp_auth_mode']);
+		if(isset($_p['smtp_con_mode']))
+			$opts['smtp_con_mode'] = sanitize_text_field($_p['smtp_con_mode']);
 
 		$opts['smtp_port'] = (int)$opts['smtp_port'];
 
@@ -87,8 +87,8 @@ class admin_smtp {
 							Connection Type
 						</th>
 						<td>
-							<select name="smtp_auth_mode">
-								<?php $opt = $opts['smtp_auth_mode']; ?>
+							<select name="smtp_con_mode">
+								<?php $opt = $opts['smtp_con_mode']; ?>
 								<option <?php if($opt === 'plaintext') echo 'selected="selected"'; ?> value="plaintext">Plain Text</option>
 								<option <?php if($opt === 'ssh') echo 'selected="selected"'; ?> value="ssh">SSH</option>
 								<option <?php if($opt === 'tls') echo 'selected="selected"'; ?> value="tls">TLS</option>

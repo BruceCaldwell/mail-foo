@@ -79,7 +79,7 @@ class templater {
 		if(!$plaintext) $text = wpautop($text);
 		if(!$plaintext && $markdown) $text = $this->do_markdown($text);
 
-		if(!$plaintext) $text = $this->templatize($text); // Wraps template
+		if(!$plaintext) $text = $this->templatize(make_clickable($text)); // Wraps template
 
 		// Do replacement codes a second time for template
 		foreach($vars as $_replace => $_value) $text = str_ireplace('%%'.$_replace.'%%', $_value, $text);
