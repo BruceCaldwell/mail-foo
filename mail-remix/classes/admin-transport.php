@@ -90,7 +90,7 @@ class admin_transport {
 							<select name="smtp_con_mode">
 								<?php $opt = $opts['smtp_con_mode']; ?>
 								<option <?php if($opt === 'plaintext') echo 'selected="selected"'; ?> value="plaintext">Plain Text</option>
-								<option <?php if($opt === 'ssh') echo 'selected="selected"'; ?> value="ssl">SSL</option>
+								<option <?php if($opt === 'ssl') echo 'selected="selected"'; ?> value="ssl">SSL</option>
 								<option <?php if($opt === 'tls') echo 'selected="selected"'; ?> value="tls">TLS</option>
 							</select>
 						</td>

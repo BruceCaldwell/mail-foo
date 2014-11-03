@@ -22,4 +22,8 @@ class utils {
 		if(!$str) return $str;
 		return esc_html(stripslashes($str));
 	}
+
+	public function get_templates() {
+		return apply_filters(__NAMESPACE__.'_templates', array('Clean' => plugin()->dir.'/templates/clean/index.html'));
+	}
 }

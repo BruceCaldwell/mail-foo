@@ -51,10 +51,11 @@ class admin_logging {
 		?>
 		<div class="wrap">
 			<h2>Mail Remix | Logging</h2>
-			<h3>Logs</h3>
 			<div class="updated">
 				<p>Mail Remix is currently logging <strong>ALL</strong> WordPress emails. Logs for these emails are available below.</p>
 			</div>
+
+			<h3>Logs</h3>
 
 			<div class="mail-remix-logs">
 				<form method="post" action="">
