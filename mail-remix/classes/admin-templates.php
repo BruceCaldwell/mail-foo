@@ -2,6 +2,9 @@
 
 namespace mail_remix;
 
+if(!defined('WPINC'))
+	exit('Do NOT access this file directly: '.basename(__FILE__));
+
 /**
  * Class admin_templates
  *
