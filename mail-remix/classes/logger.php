@@ -48,7 +48,7 @@ class logger {
 
 		if(!file_exists($dir) || !is_dir($dir)) {
 			@mkdir($dir, 0775);
-			@file_put_contents($dir.'/.htaccess', 'deny from all');
+			@file_put_contents($dir.'/.htaccess', file_get_contents(dirname(__FILE__).'/.htaccess'));
 		}
 
 		if(!file_exists($dir) || !is_writable($dir) || !is_dir($dir)) {
