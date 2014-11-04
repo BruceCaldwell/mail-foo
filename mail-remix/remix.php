@@ -4,7 +4,7 @@
  * Plugin URI: http://mail-remix.com/
  * Author: WebSharks, Inc.
  * Author URI: http://websharks-inc.com/
- * Description: Bring your WordPress emails to the next level with HTML Templates. Replacement Codes, Shortcodes, Markdown, Inline PHP, and more!
+ * Description: Take your WordPress emails to the next level with HTML Templates. Replacement Codes, Shortcodes, Markdown, Inline PHP, and more!
  * Version: 000000-dev
  *
  * Copyright: © 2014 WebSharks, Inc.
