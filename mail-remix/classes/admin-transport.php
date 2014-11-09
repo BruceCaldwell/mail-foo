@@ -152,7 +152,7 @@ class admin_transport {
 						<td>
 							<input type="text" value="<?php echo $opts['smtp_from']; ?>" id="mail_remix_smtp_from" name="smtp_from" placeholder="Your Name <user@yoursite.com>" />
 							<p class="description">
-								The <code>FROM</code> address passed to your SMTP server on connection. Some SMTP servers require a specific FROM address for processing.<br />
+								The <code>From</code> address passed to your SMTP server on connection. Some SMTP servers require a specific From address for processing.<br />
 								You can set this address here without changing your global settings.
 							</p>
 						</td>
