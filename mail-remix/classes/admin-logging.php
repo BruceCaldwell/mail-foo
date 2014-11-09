@@ -52,7 +52,16 @@ class admin_logging {
 		<div class="wrap">
 			<h2>Mail Remix | Logging</h2>
 			<div class="updated">
-				<p>Mail Remix is currently logging ALL WordPress emails sent through <a href="http://codex.wordpress.org/Function_Reference/wp_mail" target="_blank"><code>wp_mail()</code></a>. Logs for these emails are available below.</p>
+				<p>
+					Mail Remix is currently logging ALL WordPress emails sent through <a href="http://codex.wordpress.org/Function_Reference/wp_mail" target="_blank"><code>wp_mail()</code></a>. Logs for these emails are available below.
+				</p>
+				<p>
+					These emails are logged via the <a href="http://codex.wordpress.org/Plugin_API/Action_Reference/phpmailer_init"><code>phpmailer_init</code></a> action, alongside the base functionality for the plugin.
+					Because the <code>wp_mail()</code> function is pluggable, emails sent by some plugins (those with their own PHPMailer implementations) may not be logged.
+				</p>
+				<p>
+					Any emails that are not being logged in these entries are incapable of being templated by Mail Remix.
+				</p>
 			</div>
 
 			<h3>Logs</h3>
