@@ -16,29 +16,18 @@ class logger {
 	public function __construct() {
 		if(!$this->check_logs_dir()) return;
 
-		add_filter('wp_mail', array($this, 'filter'));
+		add_action('phpmailer_init', array($this, 'phpmailer_log'), PHP_INT_MAX);
 	}
 
-	/**
-	 * Writes to log files on the `wp_mail` hook
-	 *
-	 * @param $args
-	 *
-	 * @return mixed
-	 */
-	public function filter($args) {
+	public function phpmailer_log($mailer) {
 		$log = array();
 
-		$log[] = '============';
-		$log[] = '  Start Log:'.date('Y-m-d H:i:s');
-		$log[] = '============'."\r\n";
+		$log[] = '# PHPMailer Log: '.date('Y-m-d H:i:s');
 		$log[] = '```';
-		$log[] = print_r($args, TRUE);
+		$log[] = print_r($mailer, TRUE);
 		$log[] = '```';
 
 		@file_put_contents(plugin()->log_dir.'/'.date('Y-m').'.log', implode("\r\n", $log)."\r\n\r\n\r\n", FILE_APPEND);
-
-		return $args;
 	}
 
 	/**
