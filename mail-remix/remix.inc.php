@@ -106,6 +106,8 @@ class plugin {
 			'smtp_host'        => '',
 			'smtp_user'        => '',
 			'smtp_pass'        => '',
+			'smtp_from'        => '',
+			'smtp_return_path' => '',
 
 			'logging'          => FALSE
 		);

@@ -31,6 +31,36 @@ class smtp {
 			$mailer->Host = $opts['smtp_host'];
 			$mailer->Port = $opts['smtp_port'];
 
+			if(!empty($opts['smtp_from'])) {
+				$email = htmlspecialchars_decode($opts['smtp_from']);
+
+				if(strpos($email, '<') === FALSE)
+					$mailer->setFrom($email);
+
+				else {
+					$email_parts   = explode('<', $email, 2);
+					$email_name    = str_replace(array('\'', '"'), '', $email_parts[0]);
+					$email_address = preg_replace('/>$/', '', $email_parts[1]);
+
+					$mailer->setFrom($email_address, $email_name);
+				}
+			}
+
+			if(!empty($opts['smtp_return_path'])) {
+				$email = htmlspecialchars_decode($opts['smtp_return_path']);
+
+				if(strpos($email, '<') === FALSE)
+					$mailer->ReturnPath = $email;
+
+				else {
+					$email_parts   = explode('<', $email, 2);
+					$email_name    = str_replace(array('\'', '"'), '', $email_parts[0]);
+					$email_address = preg_replace('/>$/', '', $email_parts[1]);
+
+					$mailer->ReturnPath = $email_address;
+				}
+			}
+
 			if($opts['smtp_auth']) {
 				$mailer->SMTPAuth = TRUE;
 

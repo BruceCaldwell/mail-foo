@@ -25,7 +25,7 @@ class admin_transport {
 			else $opts[$name] = FALSE;
 		}
 
-		$text_forms = array('smtp_host', 'smtp_user', 'smtp_pass', 'smtp_port');
+		$text_forms = array('smtp_host', 'smtp_user', 'smtp_pass', 'smtp_port', 'smtp_from', 'smtp_return_path');
 
 		foreach($text_forms as $name) {
 			if(isset($_p[$name]) && $_p[$name])
@@ -135,6 +135,39 @@ class admin_transport {
 							<label for="mail_remix_smtp_pass">
 								<input type="password" autocomplete="off" name="smtp_pass" value="<?php echo $opts['smtp_pass']; ?>" id="mail_remix_smtp_pass" />
 							</label>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+
+				<h3>Additional Headers</h3>
+				<table class="form-table">
+					<tbody>
+					<tr>
+						<th scope="row">
+							<label for="mail_remix_smtp_from">
+								From
+							</label>
+						</th>
+						<td>
+							<input type="text" value="<?php echo $opts['smtp_from']; ?>" id="mail_remix_smtp_from" name="smtp_from" placeholder="Your Name <user@yoursite.com>" />
+							<p class="description">
+								The <code>FROM</code> address passed to your SMTP server on connection. Some SMTP servers require a specific FROM address for processing.<br />
+								You can set this address here without changing your global settings.
+							</p>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">
+							<label for="mail_remix_smtp_return_path">
+								Return-Path
+							</label>
+						</th>
+						<td>
+							<input type="text" value="<?php echo $opts['smtp_return_path']; ?>" id="mail_remix_smtp_return_path" name="smtp_return_path" placeholder="user@yoursite.com" />
+							<p class="description">
+								The Return-Path defines the return address used by the SMTP server in the case of a "bounce".
+							</p>
 						</td>
 					</tr>
 					</tbody>
