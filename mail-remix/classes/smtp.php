@@ -21,7 +21,9 @@ class smtp {
 		if($opts['smtp']) $this->force_smtp();
 	}
 
-	// TODO Authentication types
+	/**
+	 * Forces emails to be sent via SMTP on the `phpmailer_init` hook
+	 */
 	private function force_smtp() {
 		add_action('phpmailer_init', function ($mailer) {
 			$opts = $this->plugin->opts();

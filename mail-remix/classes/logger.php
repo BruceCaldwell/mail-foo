@@ -19,6 +19,13 @@ class logger {
 		add_action('phpmailer_init', array($this, 'phpmailer_log'), PHP_INT_MAX);
 	}
 
+	/**
+	 * Main logging routine
+	 *
+	 * Hooks to `phpmailer_init`
+	 *
+	 * @param $mailer
+	 */
 	public function phpmailer_log($mailer) {
 		$log = array();
 
