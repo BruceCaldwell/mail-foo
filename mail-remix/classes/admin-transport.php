@@ -165,9 +165,6 @@ class admin_transport {
 						</th>
 						<td>
 							<input type="text" value="<?php echo $opts['smtp_return_path']; ?>" id="mail_remix_smtp_return_path" name="smtp_return_path" placeholder="user@yoursite.com" />
-							<p class="description">
-								The Return-Path defines the return address used by the SMTP server in the case of a "bounce".
-							</p>
 						</td>
 					</tr>
 					</tbody>
