@@ -52,7 +52,7 @@ class admin_logging {
 		<div class="wrap">
 			<h2>Mail Remix | Logging</h2>
 			<div class="updated">
-				<p>Mail Remix is currently logging <strong>ALL</strong> WordPress emails. Logs for these emails are available below.</p>
+				<p>Mail Remix is currently logging ALL WordPress emails sent through <a href="http://codex.wordpress.org/Function_Reference/wp_mail" target="_blank"><code>wp_mail()</code></a>. Logs for these emails are available below.</p>
 			</div>
 
 			<h3>Logs</h3>
