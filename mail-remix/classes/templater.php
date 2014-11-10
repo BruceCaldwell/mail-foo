@@ -31,7 +31,7 @@ class templater {
 	 * @param $mailer \PHPMailer object
 	 */
 	public function mailer($mailer) {
-		if($mailer->ContentType === 'text/html') return;
+		if($mailer->ContentType === 'text/html' || $this->is_html_email($mailer->Body)) return;
 
 		$plaintext_content = $mailer->Body;
 
@@ -141,5 +141,18 @@ class templater {
 
 		if($ev !== FALSE) return ob_get_clean();
 		return $code;
+	}
+
+	/**
+	 * Checks an email for HTML
+	 *
+	 * @param $text
+	 *
+	 * @return bool
+	 */
+	private function is_html_email($text) {
+		if(stripos($text, '<!DOCTYPE') !== FALSE || stripos($text, '</html>') !== FALSE)
+			return TRUE;
+		return FALSE;
 	}
 }
