@@ -31,6 +31,8 @@ class templater {
 	 * @param $mailer \PHPMailer object
 	 */
 	public function mailer($mailer) {
+		if($mailer->ContentType === 'text/html') return;
+
 		$plaintext_content = $mailer->Body;
 
 		$mailer->MsgHTML($this->parse($plaintext_content));
